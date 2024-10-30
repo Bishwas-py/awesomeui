@@ -4,28 +4,24 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/widget"
-	"log"
 	"time"
 )
 
-var names = []string{
-	"John", "Doe",
-	"Jane", "Smith",
+func updateCurrentTime(headTitle *widget.Label) {
+	for {
+		headTitle.SetText(time.Now().Format("Time: 15:04:05"))
+		time.Sleep(1 * time.Second)
+	}
 }
 
 func main() {
-	log.Print("Hello World!")
 	a := app.New()
 	w := a.NewWindow("Hello World")
 	w.Resize(fyne.NewSize(400, 200))
-
-	headTitle := widget.NewLabel("Hello World!")
+	headTitle := widget.NewLabel("Time: --:--:--")
 	w.SetContent(headTitle)
 	go func() {
-		for _, name := range names {
-			headTitle.SetText(name)
-			time.Sleep(1 * time.Second)
-		}
+		updateCurrentTime(headTitle)
 	}()
 	w.ShowAndRun()
 }
